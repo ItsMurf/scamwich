@@ -1,11 +1,11 @@
 import requests
 
-url = ''
+url = input('Enter Request URL: ')
 
 data = {
-    'EMAIL': '',
-    'LASTNAME': '',
-    'FIRSTNAME': ''
+    'EMAIL': input('Enter Form Email: '),
+    'LASTNAME': input('Enter Form Lastname: '),
+    'FIRSTNAME': input('Enter Form Firstname: ')
 }
 
 while True:
