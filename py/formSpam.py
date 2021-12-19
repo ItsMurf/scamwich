@@ -10,9 +10,9 @@ print()
 def initial():
     contIn = ''
     while(contIn != 'Y' and contIn != 'y' and contIn != 'N' and contIn != 'n'):
-        contIn = input('Continue? Y/N: ')
+        contIn = input('Continue? Y/N: ').upper()
 
-    if contIn == 'Y' or 'y':
+    if contIn == 'Y':
         url = input('Enter Request URL: ')  # request URL destination
         delayCount = int(input('Delay Time: '))  # seconds between each request
         # number of forms sent (~17 until flagged)
@@ -24,7 +24,7 @@ def initial():
         }
         return url, delayCount, spamCount, data
 
-    elif contIn == 'N' or 'n':
+    elif contIn == 'N':
         print()
         print('Exiting.')
         print()
