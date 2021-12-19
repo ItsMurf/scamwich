@@ -15,8 +15,7 @@ def initial():
     if contIn == 'Y':
         url = input('Enter Request URL: ')  # request URL destination
         delayCount = int(input('Delay Time: '))  # seconds between each request
-        # number of forms sent (~17 until flagged)
-        spamCount = int(input('Spam Count: '))
+        spamCount = int(input('Spam Count: ')) # number of forms sent (~17 until flagged)
         data = {
             'EMAIL': input('Enter Form Email: '),
             'LASTNAME': input('Enter Form Lastname (User): '),
