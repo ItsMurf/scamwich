@@ -4,7 +4,7 @@ import random
 
 print()
 print('Scamwich - formSpam')
-print('Spam online forms with your choice of inputs.')
+print('Spam Online Forms')
 print()
 
 def initial():
@@ -40,9 +40,11 @@ def initial():
 
 def main(url, delayCount, spamCount, data, line):
     for i in range(spamCount):
-        response = requests.post(url, data=data).text
-        print(line)
-        print(response)
+        response = requests.post(url, allow_redirects=False, data=data).text
+        print()
+        print(str(i + 1) + ': ' + response)
+        print('Ctrl + C to Exit.')
+        print()
 
         time.sleep(delayCount)
 
