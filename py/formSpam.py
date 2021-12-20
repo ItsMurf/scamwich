@@ -1,11 +1,11 @@
 import requests
 import time
+import random
 
 print()
 print('Scamwich - formSpam')
 print('Spam online forms with your choice of inputs.')
 print()
-
 
 def initial():
     contIn = ''
@@ -14,14 +14,19 @@ def initial():
 
     if contIn == 'Y':
         url = input('Enter Request URL: ')  # request URL destination
-        delayCount = int(input('Delay Time: '))  # seconds between each request
-        spamCount = int(input('Spam Count: ')) # number of forms sent (~17 until flagged)
-        data = {
+        delayCount = float(input('Delay Time: '))  # seconds between each request
+        spamCount = int(input('Spam Count: ')) # number of forms sent (~16 until flagged)
+
+        for i in range(spamCount):
+            line = random.choice(open('names.txt').readlines())
+
+        data = { # change the following variables to match the request
             'EMAIL': input('Enter Form Email: '),
             'LASTNAME': input('Enter Form Lastname (User): '),
-            'FIRSTNAME': input('Enter Form Firstname (Password): ')
+            'FIRSTNAME': line # input('Enter Form Firstname (Password): ')
         }
-        return url, delayCount, spamCount, data
+
+        return url, delayCount, spamCount, data, line
 
     elif contIn == 'N':
         print()
@@ -30,16 +35,17 @@ def initial():
         exit()
 
     else:
-        print('Try again.')
+        print()
 
 
-def main(url, delayCount, spamCount, data):
+def main(url, delayCount, spamCount, data, line):
     for i in range(spamCount):
         response = requests.post(url, data=data).text
+        print(line)
         print(response)
 
         time.sleep(delayCount)
 
 
-url, delayCount, spamCount, data = initial()
-main(url, delayCount, spamCount, data)
+url, delayCount, spamCount, data, line = initial()
+main(url, delayCount, spamCount, data, line)
