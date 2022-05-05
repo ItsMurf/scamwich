@@ -3,6 +3,7 @@ import time
 import random
 import string
 import json
+import threading
 
 def emailGen(spamCount, fNames, lNames, domain):
     emails = []
@@ -74,8 +75,8 @@ def main():
     fNames = json.loads(open('names.json').read())
     lNames = json.loads(open('lnames.json').read())
 
-    print('\n               Scamwich - formSpam')
-    print('           Spamming Online Forms Since 2022\n')
+    print('\n                               Scamwich - formSpam')
+    print('                         Spamming Online Forms Since 2022\n')
 
     print('Ctrl + C to Exit.')
 
@@ -98,3 +99,15 @@ def main():
 if __name__ == '__main__':
     main()
     
+# threads = []
+
+# for i in range(50):
+#     t = threading.Thread(target=main)
+#     t.daemon = True
+#     threads.append(t)
+
+# for i in range(50):
+#     threads[i].start()
+
+# for i in range(50):
+#     threads[i].join()
