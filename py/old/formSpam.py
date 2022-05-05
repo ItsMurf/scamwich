@@ -22,8 +22,8 @@ def initial():
 
         data = { # change the following variables to match the request
             'EMAIL': input('Enter Form Email: '),
-            'LASTNAME': input('Enter Form Lastname (User): '),
-            'FIRSTNAME': line # input('Enter Form Firstname (Password): ')
+            'USER': input('Enter Form Lastname (User): '),
+            'PW': line # input('Enter Form Firstname (Password): ')
         }
 
         return url, delayCount, spamCount, data, line
