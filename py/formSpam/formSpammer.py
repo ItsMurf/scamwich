@@ -31,8 +31,10 @@ def passGen(spamCount):
         number = "0123456789"
         symbol = "!@#$%*"
 
+        length = random.randint(10, 17)
+
         passw = lower + upper + number + symbol
-        password = "".join(random.sample(passw, 12))
+        password = "".join(random.sample(passw, length))
 
         passwords.append(password)
     return passwords
@@ -48,12 +50,13 @@ def phoneGen(spamCount):
     return phones
 
 
-def requestsVal(dataCount, emails, passwords, fNames):
+def requestsVal(emails, passwords, fNames, lNames, phones):
     requestData = {
         "EMAIL": random.choice(emails),
-        "PASSWORD": random.choice(passwords),
-        "USER": random.choice(fNames)
-        # 'LNAME': random.choice(lNames)
+        "STATUS": random.choice(passwords),
+        "USER": random.choice(fNames),
+        "FIRSTNAME": random.choice(fNames),
+        "LASTNAME": random.choice(lNames),
     }
     return requestData
 
@@ -62,7 +65,7 @@ def wait():
     print(
         "\nWould you like to use the randomized timer (16-30 seconds) or choose your own delay? "
     )
-    waitInput = input('\nType "R" (Randomized) or "C" (Choose): ')
+    waitInput = input('Type "R" (Randomized) or "C" (Choose): ')
 
     if waitInput == "R" or waitInput == "r":
         print("Randomized Delays Chosen. Starting...")
@@ -89,26 +92,41 @@ def main():
 
     url = input("\nEnter the forms URL: ")
     spamCount = int(input("\nEnter the amount of times to loop: "))
-    dataCount = int(input("\nEnter the request variable count: "))
+    # dataCount = int(input("\nEnter the request variable count: "))
 
     emails = emailGen(spamCount, fNames, lNames, domain)
     passwords = passGen(spamCount)
     phones = phoneGen(spamCount)
-    headers = requestsVal(dataCount, emails, passwords, fNames)
     delay = wait()
 
     for i in range(spamCount):
-        response = requests.post(url, allow_redirects=False, data=headers).text
+        headers = requestsVal(emails, passwords, fNames, lNames, phones)
+        response = requests.post(url, allow_redirects=False, data=headers)
         print(
             "\n"
             + str(i + 1)
             + ": "
-            + response
-            + " "
-            + random.choice(emails)
-            + " "
-            + random.choice(passwords)
             + "\n"
+            + "Response: "
+            + str(response)
+            + "\n"
+            + "Email: "
+            + headers["EMAIL"]
+            + "\n"
+            + "Password: "
+            + headers["STATUS"]
+            + "\n"
+            + "First Name: "
+            + headers["FIRSTNAME"]
+            + "\n"
+            + "User: "
+            + headers["USER"]
+            + "\n"
+            + "Last Name: "
+            + headers["LASTNAME"]
+            + "\n"
+            # + "Phone: "
+            # + headers["SMS"]
         )
 
         time.sleep(delay)
