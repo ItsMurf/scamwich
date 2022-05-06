@@ -5,6 +5,7 @@ import string
 import json
 import threading
 import subprocess
+import string
 
 
 def emailGen(spamCount, fNames, lNames, domain):
@@ -27,12 +28,12 @@ def passGen(spamCount):
     passwords = []
 
     for i in range(spamCount):
-        lower = "abcdefghijklmnoprstuvyz"
-        upper = "ABCDEFGHIJKMLMNOPRSTUVYZ"
-        number = "0123456789"
-        symbol = "!@#$%*"
+        lower = string.ascii_lowercase
+        upper = string.ascii_uppercase
+        number = string.digits
+        symbol = string.punctuation
 
-        length = random.randint(10, 17)
+        length = random.randint(8, 17)
 
         passw = lower + upper + number + symbol
         password = "".join(random.sample(passw, length))
@@ -42,11 +43,11 @@ def passGen(spamCount):
 
 
 def phoneGen(spamCount):
-    # while this process does work, lot's of forms have a double check for the "555" area code.
+    # while this process does work, lot's of forms have a double check for the "555" area code, which will cause error.
     phones = []
 
     for i in range(spamCount):
-        number = "0123456789"
+        number = string.digits
         phone = (
             "(555)"
             + " "
@@ -60,10 +61,10 @@ def phoneGen(spamCount):
 
 def requestsVal(emails, passwords, fNames, lNames, phones):
     requestData = {
-        "EMAIL": random.choice(emails),  # Change accourding to headers.
-        "PASSWORD": random.choice(passwords),  # Change accourding to headers.
+        "EMAIL": random.choice(emails),  # Change according to headers.
+        "PASSWORD": random.choice(passwords),  # Change according to headers.
     }
-    requestData["USER"] = requestData["EMAIL"]  # Change accourding to headers.
+    requestData["USER"] = requestData["EMAIL"]  # Change according to headers.
     return requestData
 
 
