@@ -7,6 +7,10 @@ import threading
 import subprocess
 import string
 
+namesJ = "lists/names.json"
+lNamesJ = "lists/lnames.json"
+rockyouJ = "lists/rockyou.json"
+
 
 def emailGen(spamCount, fNames, lNames, domain):
     emails = []
@@ -24,26 +28,22 @@ def emailGen(spamCount, fNames, lNames, domain):
     return emails
 
 
-def passGen(spamCount):
+def passGen(spamCount, rockyou):
     passwords = []
 
     for i in range(spamCount):
-        lower = string.ascii_lowercase
-        upper = string.ascii_uppercase
-        number = string.digits
-        symbol = string.punctuation
+        rockRand = random.choice(rockyou)
+        passwords.append(rockRand)
 
-        length = random.randint(8, 17)
+        length = random.randint(8, 15)
 
-        passw = lower + upper + number + symbol
-        password = "".join(random.sample(passw, length))
+        password = "".join(random.sample(string.printable, length))
 
         passwords.append(password)
     return passwords
 
 
-def phoneGen(spamCount):
-    # while this process does work, lot's of forms have a double check for the "555" area code, which will cause error.
+def phoneGen(spamCount):  # process does work, but most forms check for 555 area code.
     phones = []
 
     for i in range(spamCount):
@@ -60,11 +60,11 @@ def phoneGen(spamCount):
 
 
 def requestsVal(emails, passwords, fNames, lNames, phones):
-    requestData = {
-        "EMAIL": random.choice(emails),  # Change according to headers.
-        "PASSWORD": random.choice(passwords),  # Change according to headers.
+    requestData = {  # Change according to headers.
+        "EMAIL": random.choice(emails),
+        "PASSWORD": random.choice(passwords),
     }
-    requestData["USER"] = requestData["EMAIL"]  # Change according to headers.
+    requestData["USER"] = requestData["EMAIL"]
     return requestData
 
 
@@ -127,13 +127,37 @@ def main():
         "live.com",
     ]
 
-    fNames = json.loads(open("names.json").read())
-    lNames = json.loads(open("lnames.json").read())
+    with open(namesJ) as names:
+        fNames = json.load(names)
+
+    with open(lNamesJ) as lasts:
+        lNames = json.load(lasts)
+
+    with open(rockyouJ) as rocked:
+        rockyou = json.load(rocked)
 
     subprocess.call("clear", shell=False)
-    print()
-    print("╭────────────────────────────────────────────────────────────────────────╮")
-    print("│                               formSpammer                              │")
+
+    print(
+        """
+    ╭────────────────────────────────────────────────────────────────╮
+    │  _                                                             │
+    │ | |                                                            │
+    │ | |  __   ,_    _  _  _                                        │
+    │ |/  /  \_/  |  / |/ |/ |                                       │
+    │ |__/\__/    |_/  |  |  |_/                                     │  
+    │ |\                                                             │
+    │ |/                                                             │
+    │                                                                │
+    │               ()                                               │
+    │               /\   _   __,   _  _  _    _  _  _    _   ,_      │
+    │              /  \|/ \_/  |  / |/ |/ |  / |/ |/ |  |/  /  |     │
+    │             /(__/|__/ \_/|_/  |  |  |_/  |  |  |_/|__/   |_/   │  
+    │                 /|                                             │
+    │                 \|                                             │
+    │                                                                │       """
+    )
+    print("╭───┴────────────────────────────────────────────────────────────────┴───╮")
     print("│                    Spamming Online Forms Since 2022                    │")
     print("╰───────────────────────────────────────────────────┬───────────────────┬╯")
     print("                                                    │ ∁trl + ∁ to Exit. │ ")
@@ -143,7 +167,7 @@ def main():
     url = urlCheck()
     spamCount = spamCountCheck()
     emails = emailGen(spamCount, fNames, lNames, domain)
-    passwords = passGen(spamCount)
+    passwords = passGen(spamCount, rockyou)
     phones = phoneGen(spamCount)
     delay = waitTime()
 
@@ -157,7 +181,7 @@ def main():
         threads.append(t)
         response = goodnight(url, headers)
 
-        print(
+        print(  # Change according to headers.
             "\n"
             + str(i + 1)
             + ": "
@@ -166,13 +190,13 @@ def main():
             + str(response)
             + "\n"
             + "   Email: "
-            + headers["EMAIL"]  # Change accourding to headers.
+            + headers["EMAIL"]
             + "\n"
             + "   Password: "
-            + headers["PASSWORD"]  # Change accourding to headers.
+            + headers["PASSWORD"]
             + "\n"
             + "   User: "
-            + headers["USER"]  # Change accourding to headers.
+            + headers["USER"]
             + "\n"
             # + "First Name: "
             # + headers["FIRSTNAME"]
