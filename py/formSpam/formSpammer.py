@@ -61,10 +61,10 @@ def phoneGen(spamCount):  # process does work, but most forms check for 555 area
 
 def requestsVal(emails, passwords, fNames, lNames, phones):
     requestData = {  # Change according to headers.
-        "EMAIL": random.choice(emails),
-        "PASSWORD": random.choice(passwords),
+        "email": random.choice(emails)
+        # "Password": random.choice(passwords),
     }
-    requestData["USER"] = requestData["EMAIL"]
+    # requestData["UserName"] = requestData["EMAIL"]
     return requestData
 
 
@@ -89,7 +89,7 @@ def waitTime():
 
 
 def goodnight(url, headers):
-    response = requests.post(url, allow_redirects=False, data=headers)
+    response = requests.post(url, allow_redirects=False, data=headers, verify=False)
 
     return response
 
@@ -155,13 +155,13 @@ def main():
     │             /(__/|__/ \_/|_/  |  |  |_/  |  |  |_/|__/   |_/   │  
     │                 /|                                             │
     │                 \|                                             │
-    │                                                                │       """
+    │                                                                │"""
     )
     print("╭───┴────────────────────────────────────────────────────────────────┴───╮")
     print("│                    Spamming Online Forms Since 2022                    │")
     print("╰───────────────────────────────────────────────────┬───────────────────┬╯")
     print("                                                    │ ∁trl + ∁ to Exit. │ ")
-    print("                                                    ╰───────────────────╯ ")
+    print("                                                    ╰──────────\─\─\─\──╯ ")
     print()
 
     url = urlCheck()
@@ -190,14 +190,14 @@ def main():
             + str(response)
             + "\n"
             + "   Email: "
-            + headers["EMAIL"]
+            + headers["email"]
             + "\n"
-            + "   Password: "
-            + headers["PASSWORD"]
-            + "\n"
-            + "   User: "
-            + headers["USER"]
-            + "\n"
+            # + "   Password: "
+            # + headers["Password"]
+            # + "\n"
+            # + "   User: "
+            # + headers["USER"]
+            # + "\n"
             # + "First Name: "
             # + headers["FIRSTNAME"]
             # + "\n"
